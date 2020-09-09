@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void wordcount(arg);
+void wordcount(char *argFile);
 
 int main(int argc, char *argv[])
 {
@@ -10,20 +10,21 @@ int main(int argc, char *argv[])
 
     for(i = 1; i < argc; i++)
     {
-        printf("%s\n", argv[i]);
+        //printf("%s\n", argv[i]);
         wordcount(argv[i]);
     }
 
     return 0;
 }
 
-void wordcount(arg)
+void wordcount(argFile)
 {
     int iCount = 0;
     char cLetter;
     FILE *pFile;
 
-    pFile = fopen(arg, "r");
+    printf("%s\n", argFile);
+    /*pFile = fopen(arg, "r");
 
     while((cLetter = fgets(pFile)) != EOF)
     {
@@ -35,5 +36,5 @@ void wordcount(arg)
 
     printf("Word count is %d", iCount);
     fclose(pFile);
-
+    */
 }
