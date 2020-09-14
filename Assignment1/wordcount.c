@@ -25,21 +25,22 @@ int main(int argc, char *argv[])
 {
     int i;
 
-    printf("Number of file args is %d\n", argc - 1);
-
+    //Check for file input
     if( argc < 2)
     {
         printf("Too few arguments, please pass a file\n");
     }
 
+    //Begin going through files passed to the program
     for(i = 1; i < argc; i++)
     {
+        //Fork the program to run wordcount function
         if(fork() == 0 )
         {
             wordcount(argv[i]);
             return 0;
         }
-    }while(wait(NULL) != -1);
+    }while(wait(NULL) != -1); //Wait for processes to finish
 
     printf("All %d files have been counted!\n", argc - 1);
 
@@ -52,17 +53,23 @@ void wordcount(char *txtFile)
     char cLetter;
     FILE *pFile;
 
-    printf("%s\n", txtFile);
+    //Opens file for reads
     pFile = fopen(txtFile, "r");
 
+    //Loop to read until EOF
     while((cLetter = fgetc(pFile)) != EOF)
     {
+        //Check for delimiters to count the words in a file
         if(cLetter == ' ' || cLetter == '\n' || cLetter == '\0')
         {
+            //Increase wordcount once delimeter is hit
             iCount++;
         }
     }
 
+    //Print file and wordcount for the process
     printf("Child process for %s: number of words is %d\n", txtFile, iCount);
+
+    //Close file
     fclose(pFile);
 }
