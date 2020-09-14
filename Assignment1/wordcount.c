@@ -34,10 +34,14 @@ int main(int argc, char *argv[])
 
     for(i = 1; i < argc; i++)
     {
-        //printf("%s\n", argv[i]);
-        fork();
-        wordcount(argv[i]);
+        if(fork() == 0 )
+        {
+            wordcount(argv[i]);
+            return 0;
+        }
     }while(wait(NULL) != -1);
+
+    printf("All %d files have been counted!\n", argc - 1);
 
     return 0;
 }
@@ -59,6 +63,6 @@ void wordcount(char *txtFile)
         }
     }
 
-    printf("Word count is %d\n", iCount);
+    printf("Child process for %s: number of words is %d\n", txtFile, iCount);
     fclose(pFile);
 }
